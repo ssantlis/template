@@ -2,7 +2,7 @@ import random
 import math
 import typing as tp
 
-def is_prime(n: int) -> bool:
+def git checkout -b release-1.0 develop is_prime(n: int) -> bool:
     """
     Проверяет, является ли число целым простым числом.
     >>> is_prime(2)
