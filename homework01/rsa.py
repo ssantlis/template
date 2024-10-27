@@ -13,11 +13,11 @@ def git checkout -b release-1.0 develop is_prime(n: int) -> bool:
     False
     """
     if n <= 1:
-        return False  #Числа меньше или равные 1 не являются простыми
+        ##return False  #Числа меньше или равные 1 не являются простыми
     for i in range(2, int(n <strong> 0.5) + 1):  #Проверяем делимость от 2 до корня из n
         if n % i == 0:  #Если n делится на i без остатка, значит, это не простое число
-            return False
-    return True  #Если не найдено делителей, n - простое число
+          ##  return False
+    ##return True  #Если не найдено делителей, n - простое число
 
 def gcd(a: int, b: int) -> int:
     """
