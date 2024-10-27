@@ -1,10 +1,8 @@
 import random
 import math
 import typing as tp
-
-def git checkout -b release-1.0 develop is_prime(n: int) -> bool:
+def is_prime(n):
     """
-    Проверяет, является ли число целым простым числом.
     >>> is_prime(2)
     True
     >>> is_prime(11)
@@ -12,12 +10,15 @@ def git checkout -b release-1.0 develop is_prime(n: int) -> bool:
     >>> is_prime(8)
     False
     """
+    # PUT YOUR CODE HERE
+    pass
+
     if n <= 1:
-        ##return False  #Числа меньше или равные 1 не являются простыми
-    for i in range(2, int(n <strong> 0.5) + 1):  #Проверяем делимость от 2 до корня из n
+        return False  #Числа меньше или равные 1 не являются простыми
+    for i in range(2, int(n ** 0.5) + 1):  #Проверяем делимость от 2 до корня из n
         if n % i == 0:  #Если n делится на i без остатка, значит, это не простое число
-          ##  return False
-    ##return True  #Если не найдено делителей, n - простое число
+            return False
+    return True  #Если не найдено делителей, n - простое число
 
 def gcd(a: int, b: int) -> int:
     """
@@ -55,34 +56,39 @@ def multiplicative_inverse(e: int, phi: int) -> int:
     return x  # Возвращаем обратное число
 
 def generate_keypair(p: int, q: int) -> tp.Tuple[tp.Tuple[int, int], tp.Tuple[int, int]]:
-    """
-    Генерирует пару ключей (публичный и приватный) на основе двух простых чисел.
-    """
-    if not (is_prime(p) and is_prime(q)):  #Проверяем, являются ли оба числа простыми
-        raise ValueError('Both numbers must be prime.')  #Если нет, выбрасываем ошибку
-    elif p == q:  # Проверяем, не равны ли p и q
-        raise ValueError('p and q cannot be equal')  #Если равны, выбрасываем ошибку
+    if not (is_prime(p) and is_prime(q)):
+        raise ValueError("Both numbers must be prime")
+    elif p == q:
+        raise ValueError("p and q cannot be equal")
 
-    n = p * q  #Вычисляем n как произведение p и q
-    phi = (p - 1) * (q - 1)  #Вычисляем значение функции Эйлера phi
+    # n = pq
+    n = p * q
 
-    e = random.randrange(1, phi)  #Генерируем случайное число e, которое будет использоваться как открытый ключ
+    # phi = (p-1)(q-1)
+    phi = (p - 1) * (q - 1)
 
-    g = gcd(e, phi)  #Находим НОД для e и phi
-    while g != 1:  #Пока НОД не равен 1
-        e = random.randrange(1, phi)  #Генерируем новое e
-        g = gcd(e, phi)  #Находим новый НОД
+    # Choose an integer e such that e and phi(n) are coprime
+    e = random.randrange(1, phi)
 
-    d = multiplicative_inverse(e, phi)  #Находим d, обратное к e по модулю phi
+    # Use Euclid's Algorithm to verify that e and phi(n) are coprime
+    g = gcd(e, phi)
+    while g != 1:
+        e = random.randrange(1, phi)
+        g = gcd(e, phi)
 
-    return ((e, n), (d, n))  #Возвращаем публичный и приватный ключи в виде кортежей
+    # Use Extended Euclid's Algorithm to generate the private key
+    d = multiplicative_inverse(e, phi)
+
+    # Return public and private keypair
+    # Public key is (e, n) and private key is (d, n)
+    return ((e, n), (d, n))
 
 def encrypt(pk: tp.Tuple[int, int], plaintext: str) -> tp.List[int]:
     """
     Шифрует сообщение с использованием публичного ключа.
     """
     key, n = pk  #Извлекаем ключ и n из публичного ключа
-    cipher = [(ord(char) <strong> key) % n for char in plaintext]  #Шифруем каждую букву сообщения
+    cipher = [(ord(char) ** key) % n for char in plaintext]  #Шифруем каждую букву сообщения
     return cipher  #Возвращаем зашифрованное сообщение в виде списка целых чисел
 
 def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
@@ -90,7 +96,7 @@ def decrypt(pk: tp.Tuple[int, int], ciphertext: tp.List[int]) -> str:
     Дешифрует сообщение с использованием приватного ключа.
     """
     key, n = pk  #Извлекаем ключ и n из приватного ключа
-    plain = [chr((char <strong> key) % n) for char in ciphertext]  #Дешифруем каждое число в исходное сообщение
+    plain = [chr((char ** key) % n) for char in ciphertext]  #Дешифруем каждое число в исходное сообщение
     return "".join(plain)  #Преобразуем список символов обратно в строку и возвращаем
 
 if __name__ == "__main__":
