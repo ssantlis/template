@@ -13,6 +13,7 @@ def encrypt_caesar(plaintext, shift=3):
     """
     ciphertext = ""
 
+
     for char in plaintext:
         if char.isalpha():  #Проверяем, что символ - буква
             #Вычисляем базовый код для 'A' или 'a'
