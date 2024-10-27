@@ -9,6 +9,7 @@ def encrypt_vigenere(plaintext: str, keyword: str) -> str:
     >>> encrypt_vigenere("ATTACKATDAWN", "LEMON")
     'LXFOPVEFRNHR'
     """
+
     keyword = keyword.upper()  #Приводим ключ к верхнему регистру для унификации
     plaintext = plaintext.upper()  #Приводим открытый текст к верхнему регистру
     ciphertext = []  #Список для хранения зашифрованных символов
